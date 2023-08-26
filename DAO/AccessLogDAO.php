@@ -7,7 +7,7 @@ define('PASSWORD', '');
 
 
 
-class PersonDAO
+class AccessLogDAO
 
 {
     protected $connection;
@@ -59,6 +59,12 @@ class PersonDAO
     public function insertOrUpdateLog($personId, $entryTime, $exitTime)
     {
         $existingEntry = $this->getExistingEntry($personId);
+
+        if ($existingEntry) {
+            $this->updateExitTime($existingEntry['id']/*valor do id da entrada em andamento*/, $exitTime);
+        } else {
+            $this->insertLog($personId, $entryTime, $exitTime);
+        }
     }
     public function getExistingEntry($personId)
     {
@@ -78,9 +84,10 @@ class PersonDAO
         $stmt = $this->connection->prepare($sql);
         $stmt->bindValue(1, $exitTime);
         $stmt->bindValue(2, $personId);
+
+
+        $stmt->execute();
     }
-
-
 
 
     public function update(PersonModel $model)
@@ -97,6 +104,15 @@ class PersonDAO
 
         return $stmt->fetchAll(PDO::FETCH_CLASS);
     }
+
+    public function selectLogs()
+    {
+        $sql = "SELECT * FROM access_logs";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_CLASS);
+    }
+
 
     public function login($cpf, $password)
     {

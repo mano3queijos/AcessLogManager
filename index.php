@@ -35,6 +35,9 @@ switch ($url) {
 
     case '/person/login/confirmation':
         PersonController::performLogin();
+        break;
+
+    case '/index':
 
         break;
 

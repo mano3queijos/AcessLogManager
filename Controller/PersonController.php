@@ -21,9 +21,9 @@ class PersonController
             // Registrar o tempo de entrada após o login bem-sucedido
             $model->recordLogin($personId);
 
-            header("Location: /profile"); // Redirecionar para a página de perfil ou outra página
+            header("Location: /person"); // Redirecionar para a página de perfil ou outra página
         } else {
-            // Exibir mensagem de erro de login
+            echo "erro";
         }
     }
 
@@ -33,7 +33,8 @@ class PersonController
 
         $model = new PersonModel();
 
-        $model->getAllRows();
+        $persons = $model->getAllRows();
+        $logs = $model->getAllLogs();
 
         include 'C:\xampp\htdocs\AccessLogManager\Views\modules\Person\ShowPerson.php';
     }

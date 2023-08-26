@@ -52,7 +52,7 @@
                     <tbody>
 
 
-                        <?php foreach ($model->rows as $item) : ?>
+                        <?php foreach ($persons->rows as $item) : ?>
                         <tr>
                             <td class="text-center">
                                 <?= $item->id ?>
@@ -70,12 +70,16 @@
                             <td class="text-center">
                                 <?= $item->birthday ?>
                             </td>
+
+                            <?php foreach ($logs->rowslogs as $log) :  ?>
                             <td class="text-center">
-                                <?= $item->birthday ?>
+                                <?= $log->entry_time ?>
                             </td>
                             <td class="text-center">
-                                <?= $item->birthday ?>
+                                <?= $log->exit_time?>
                             </td>
+                            <?php endforeach ?>
+
 
                         </tr>
                         <?php endforeach ?>
