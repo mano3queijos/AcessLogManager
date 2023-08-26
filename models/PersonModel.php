@@ -78,7 +78,7 @@ class PersonModel
     }
     public function save()
     {
-        include 'DAO/PersonDAO.php';
+        include 'C:\xampp\htdocs\AccessLogManager\DAO\PersonDAO.php';
 
         $dao = new PersonDAO();
 
@@ -94,5 +94,35 @@ class PersonModel
 
 
         $this->rows =  $dao->select();
+    }
+
+    public function login($cpf, $password)
+    {
+
+        include 'C:\xampp\htdocs\AccessLogManager\DAO\PersonDAO.php';
+        $dao = new PersonDAO();
+
+        return $dao->login($cpf, $password);
+    }
+
+    public function recordLogin($personId)
+    {
+        $entryTime = date("Y-m-d H:i:s"); // Captura a hora atual
+        $exitTime = null; // Como é um login, a hora de saída ainda não foi registrada
+
+        include 'C:\xampp\htdocs\AccessLogManager\DAO\AccessLogDAO.php';
+        $accessLogDAO = new PersonDAO();
+
+        $accessLogDAO->insertLog($personId, $entryTime, $exitTime);
+    }
+
+    public function recordLogout($personId)
+    {
+        $exitTime = date("Y-m-d H:i:s"); // Captura a hora atual
+
+        include 'C:\xampp\htdocs\AccessLogManager\DAO\AccessLogDAO.php';
+        $accessLogDAO = new PersonDAO();
+
+        $accessLogDAO->updateExitTime($personId, $exitTime);
     }
 }

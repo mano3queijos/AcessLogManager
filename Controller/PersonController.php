@@ -4,6 +4,29 @@
 class PersonController
 {
 
+
+
+    public static function performLogin()
+    {
+        include 'C:\xampp\htdocs\AccessLogManager\models\PersonModel.php';
+        $model = new PersonModel();
+
+        $cpf = $_POST['cpf'];
+        $password = $_POST['password'];
+
+        $personId = $model->login($cpf, $password);
+
+
+        if ($personId) {
+            // Registrar o tempo de entrada após o login bem-sucedido
+            $model->recordLogin($personId);
+
+            header("Location: /profile"); // Redirecionar para a página de perfil ou outra página
+        } else {
+            // Exibir mensagem de erro de login
+        }
+    }
+
     public static function index()
     {
         include 'C:\xampp\htdocs\AccessLogManager\models\PersonModel.php';

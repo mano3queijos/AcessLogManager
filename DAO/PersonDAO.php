@@ -43,6 +43,43 @@ class PersonDAO
 
         $stmt->execute();
     }
+    public function insertLog($personId, $entryTime, $exitTime)
+    {
+        $sql = "INSERT INTO access_logs (person_id, entry_time, exit_time) VALUES (?, ?, ?)";
+        $stmt = $this->connection->prepare($sql);
+
+        $stmt->bindValue(1, $personId);
+        $stmt->bindValue(2, $entryTime);
+        $stmt->bindValue(3, $exitTime);
+
+
+        $stmt->execute();
+    }
+
+    public function insertOrUpdateLog($personId, $entryTime, $exitTime)
+    {
+        $existingEntry = $this->getExistingEntry($personId);
+    }
+    public function getExistingEntry($personId)
+    {
+        $sql = "SELECT * FROM access_logs WHERE person_id = ? AND exit_time IS NULL";
+        $stmt = $this->connection->prepare($sql);
+
+        $stmt->bindValue(1, $personId);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updateExitTime($personId, $exitTime)
+    {
+
+        $sql = "UPDATE access_logs SET exit_time = ? WHERE person_id = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindValue(1, $exitTime);
+        $stmt->bindValue(2, $personId);
+    }
+
 
 
 
@@ -59,5 +96,20 @@ class PersonDAO
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_CLASS);
+    }
+
+    public function login($cpf, $password)
+    {
+        $sql = "SELECT id FROM persons WHERE cpf = ? AND password = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$cpf, $password]);
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            return $result['id'];
+        } else {
+            return false;
+        }
     }
 }

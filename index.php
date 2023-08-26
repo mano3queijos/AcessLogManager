@@ -17,7 +17,7 @@ switch ($url) {
 
         break;
 
-    case '/login':
+    case '/person/login':
 
         PersonController::login();
 
@@ -30,6 +30,11 @@ switch ($url) {
 
     case '/person/form/save':
         PersonController::save();
+
+        break;
+
+    case '/person/login/confirmation':
+        PersonController::performLogin();
 
         break;
 
