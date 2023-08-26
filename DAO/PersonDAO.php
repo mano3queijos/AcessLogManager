@@ -105,13 +105,24 @@ class AccessLogDAO
         return $stmt->fetchAll(PDO::FETCH_CLASS);
     }
 
-    public function selectLogs()
+    public function getAllRowsWithLastEntry()
     {
-        $sql = "SELECT * FROM access_logs";
+        $sql = "
+        SELECT p.*, l.entry_time AS last_entry
+        FROM persons p
+        LEFT JOIN (
+            SELECT person_id, MAX(entry_time) AS entry_time
+            FROM access_logs
+            GROUP BY person_id
+        ) l ON p.id = l.person_id
+    ";
+
         $stmt = $this->connection->prepare($sql);
         $stmt->execute();
+
         return $stmt->fetchAll(PDO::FETCH_CLASS);
     }
+
 
 
     public function login($cpf, $password)

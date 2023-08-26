@@ -78,7 +78,7 @@ class PersonModel
     }
     public function save()
     {
-        include 'C:\xampp\htdocs\AccessLogManager\DAO\AccessLogDAO.php';
+        include 'C:\xampp\htdocs\AccessLogManager\DAO\PersonDAO.php';
 
         $dao = new AccessLogDAO();
 
@@ -88,7 +88,7 @@ class PersonModel
     public function getAllRows()
     {
 
-        include 'C:\xampp\htdocs\AccessLogManager\DAO\AccessLogDAO.php';
+        include 'C:\xampp\htdocs\AccessLogManager\DAO\PersonDAO.php';
 
         $dao = new AccessLogDAO();
 
@@ -96,17 +96,16 @@ class PersonModel
     }
     public function getAllLogs()
     {
-        include 'C:\xampp\htdocs\AccessLogManager\DAO\AccessLogDAO.php'; // Ajuste o caminho do DAO conforme necessário
 
         $logDao = new AccessLogDAO();
 
-        return $logDao->selectLogs();
+        return $logDao->getAllRowsWithLastEntry();
     }
 
     public function login($cpf, $password)
     {
 
-        include 'C:\xampp\htdocs\AccessLogManager\DAO\AccessLogDAO.php';
+        include 'C:\xampp\htdocs\AccessLogManager\DAO\PersonDAO.php';
         $dao = new AccessLogDAO();
 
         return $dao->login($cpf, $password);
@@ -114,10 +113,9 @@ class PersonModel
 
     public function recordLogin($personId)
     {
-        $entryTime = date("Y-m-d H:i:s"); // Captura a hora atual
-        $exitTime = null; // Como é um login, a hora de saída ainda não foi registrada
+        $entryTime = date("Y-m-d H:i:s");
+        $exitTime = null;
 
-        include 'C:\xampp\htdocs\AccessLogManager\DAO\AccessLogDAO.php';
         $accessLogDAO = new AccessLogDAO();
 
         $accessLogDAO->insertLog($personId, $entryTime, $exitTime);
@@ -125,9 +123,9 @@ class PersonModel
 
     public function recordLogout($personId)
     {
-        $exitTime = date("Y-m-d H:i:s"); // Captura a hora atual
+        $exitTime = date("Y-m-d H:i:s");
 
-        include 'C:\xampp\htdocs\AccessLogManager\DAO\AccessLogDAO.php';
+        include 'C:\xampp\htdocs\AccessLogManager\DAO\PersonDAO.php';
         $accessLogDAO = new AccessLogDAO();
 
         $accessLogDAO->updateExitTime($personId, $exitTime);

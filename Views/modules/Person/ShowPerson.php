@@ -52,37 +52,29 @@
                     <tbody>
 
 
-                        <?php foreach ($persons->rows as $item) : ?>
+                        <?php foreach ($persons as $person) : ?>
                         <tr>
                             <td class="text-center">
-                                <?= $item->id ?>
-
+                                <?= $person->id ?>
                             </td>
                             <td class="text-center">
-                                <?= $item->name ?>
+                                <?= $person->name ?>
                             </td>
                             <td class="text-center">
-                                <?= $item->cpf ?>
+                                <?= $person->cpf ?>
                             </td>
                             <td class="text-center">
-                                <?= $item->email ?>
+                                <?= $person->email ?>
                             </td>
                             <td class="text-center">
-                                <?= $item->birthday ?>
-                            </td>
-
-                            <?php foreach ($logs->rowslogs as $log) :  ?>
-                            <td class="text-center">
-                                <?= $log->entry_time ?>
+                                <?= $person->birthday ?>
                             </td>
                             <td class="text-center">
-                                <?= $log->exit_time?>
+                                <?= $person->last_entry ?>
                             </td>
-                            <?php endforeach ?>
-
 
                         </tr>
-                        <?php endforeach ?>
+                        <?php endforeach; ?>
 
                     </tbody>
 

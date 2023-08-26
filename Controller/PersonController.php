@@ -36,6 +36,7 @@ class PersonController
         $persons = $model->getAllRows();
         $logs = $model->getAllLogs();
 
+
         include 'C:\xampp\htdocs\AccessLogManager\Views\modules\Person\ShowPerson.php';
     }
 
