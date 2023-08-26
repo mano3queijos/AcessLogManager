@@ -6,8 +6,19 @@ class PersonController
 
     public static function index()
     {
+        include 'C:\xampp\htdocs\AccessLogManager\models\PersonModel.php';
+
+        $model = new PersonModel();
+
+        $model->getAllRows();
 
         include 'C:\xampp\htdocs\AccessLogManager\Views\modules\Person\ShowPerson.php';
+    }
+
+    public static function login()
+    {
+
+        include 'C:\xampp\htdocs\AccessLogManager\Views\modules\Person\Login.php';
     }
 
     public static function form()

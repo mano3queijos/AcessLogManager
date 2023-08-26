@@ -36,11 +36,14 @@
                     <thead class="table-dark">
 
                         <tr>
+                            <th class="text-center" scope="col">id</th>
                             <th class="text-center" scope="col">Name</th>
                             <th class="text-center" scope="col">CPF</th>
                             <th class="text-center" scope="col">Email</th>
                             <th class="text-center" scope="col">BirthDay</th>
-                            <th class="text-center" scope="col">Nome</th>
+                            <th class="text-center" scope="col">Entrance </th>
+                            <th class="text-center" scope="col">exit</th>
+
 
                         </tr>
 
@@ -48,24 +51,36 @@
 
                     <tbody>
 
-                        <c:forEach var="coordenadores" items="${coordenadores}">
-                            <tr>
-                                <td class="text-center">
-                                    <c:out value="${coordenadores.nome}" />
-                                </td>
-                                <td class="text-center">
-                                    <c:out value="${coordenadores.cursos}" />
-                                </td>
-                                <td class="text-center">
-                                    <c:out value="${coordenadores.disponibilidade}" />
-                                </td>
 
-                            </tr>
-                        </c:forEach>
+                        <?php foreach ($model->rows as $item) : ?>
+                        <tr>
+                            <td class="text-center">
+                                <?= $item->id ?>
 
+                            </td>
+                            <td class="text-center">
+                                <?= $item->name ?>
+                            </td>
+                            <td class="text-center">
+                                <?= $item->cpf ?>
+                            </td>
+                            <td class="text-center">
+                                <?= $item->email ?>
+                            </td>
+                            <td class="text-center">
+                                <?= $item->birthday ?>
+                            </td>
+                            <td class="text-center">
+                                <?= $item->birthday ?>
+                            </td>
+                            <td class="text-center">
+                                <?= $item->birthday ?>
+                            </td>
+
+                        </tr>
+                        <?php endforeach ?>
 
                     </tbody>
-
 
 
 

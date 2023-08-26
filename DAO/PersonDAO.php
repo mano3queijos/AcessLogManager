@@ -50,7 +50,14 @@ class PersonDAO
     {
     }
 
-    public function select(PersonModel $model)
+    public function select()
     {
+
+        $sql = "SELECT * FROM persons";
+
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_CLASS);
     }
 }

@@ -4,6 +4,7 @@ class PersonModel
 
 {
 
+    public $rows;
 
     private $cpf,  $email,  $name,   $id,  $password,  $phoneNumber, $birthday;
 
@@ -82,5 +83,16 @@ class PersonModel
         $dao = new PersonDAO();
 
         $dao->insert($this);
+    }
+
+    public function getAllRows()
+    {
+
+        include 'C:\xampp\htdocs\AccessLogManager\DAO\PersonDAO.php';
+
+        $dao = new PersonDAO();
+
+
+        $this->rows =  $dao->select();
     }
 }

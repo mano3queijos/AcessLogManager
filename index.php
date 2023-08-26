@@ -17,6 +17,12 @@ switch ($url) {
 
         break;
 
+    case '/login':
+
+        PersonController::login();
+
+        break;
+
     case '/form':
         PersonController::form();
 

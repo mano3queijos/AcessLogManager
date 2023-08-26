@@ -81,7 +81,7 @@
                             person</button>
 
 
-                        <a href="./index.jsp">
+                        <a href="/">
 
 
                             <button type="button" name="Cancelar" class="btn btn-danger" type="submit">Cancelar</button>
