@@ -24,6 +24,7 @@ class PersonController
         $model->setEmail($_POST['email']);
         $model->setBirthday($_POST['birthday']);
         $model->setCpf($_POST['cpf']);
+        $model->setPhoneNumber($_POST['phoneNumber']);
         $model->setPassword($_POST['password']);
 
         $model->save();
