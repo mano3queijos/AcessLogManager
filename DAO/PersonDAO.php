@@ -48,31 +48,30 @@ class AccessLogDAO
         $sql = "UPDATE persons SET entry_time = ? WHERE id = ?";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindValue(1, $entryTime);
-        $stmt->bindValue(2, $personId);;
+        $stmt->bindValue(2, $personId);
         $stmt->execute();
     }
 
-    public function insertOrUpdateLog($personId, $entryTime, $exitTime)
-    {
-        $existingEntry = $this->getExistingEntry($personId);
 
-        if ($existingEntry) {
-            $this->updateExitTime($existingEntry['id'], $exitTime);
-        } else {
-            $this->insertLog($personId, $entryTime);
-        }
-    }
-    public function getExistingEntry($personId)
+    public function hasUnfinishedEntry($personId)
     {
-        $sql = "SELECT * FROM access_logs WHERE person_id = ? AND exit_time IS NULL";
+        $sql = "SELECT * FROM persons WHERE id = ? AND entry_time IS NOT NULL AND exit_time IS NULL";
         $stmt = $this->connection->prepare($sql);
-
         $stmt->bindValue(1, $personId);
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function hasUnfinishedExit($personId)
+    {
+        $sql = "SELECT * FROM persons WHERE id = ? AND entry_time IS NULL";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindValue(1, $personId);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
     public function updateExitTime($personId, $exitTime)
     {
 
@@ -85,10 +84,6 @@ class AccessLogDAO
         $stmt->execute();
     }
 
-
-    public function update(PersonModel $model)
-    {
-    }
 
     public function select()
     {

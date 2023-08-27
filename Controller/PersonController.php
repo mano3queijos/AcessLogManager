@@ -13,31 +13,39 @@ class PersonController
         $cpf = $_POST['cpf'];
         $password = $_POST['password'];
 
-        $userLoggedIn = $model->login($cpf, $password);
+        try {
+            $userLoggedIn = $model->login($cpf, $password);
+            if ($userLoggedIn) {
+                $_SESSION['authenticated'] = true;
+                $_SESSION['user_id'] = $userLoggedIn;
 
-        if ($userLoggedIn) {
-            $_SESSION['user_id'] = $userLoggedIn;
+                $model->recordLogin($userLoggedIn);
 
-            $model->recordLogin($userLoggedIn);
-
-            header("Location: /KingdonOfCats");
-        } else {
-            echo "erro";
+                header("Location: /KingdonOfCats");
+            } else {
+                echo "erro";
+            }
+        } catch (PDOException $e) {
+            echo "Erro de conexão: " . $e->getMessage();
         }
     }
 
     public static function performLogOut()
     {
-
         include 'C:\xampp\htdocs\AccessLogManager\models\PersonModel.php';
         $model = new PersonModel();
         $personId = $_SESSION['user_id'];
 
-        $model->recordLogout($personId);
-
-        // Redirecionar para a página de logout ou outra página
-        header("Location: /");
+        try {
+            $model->recordLogout($personId);
+            session_unset();
+            session_destroy();
+            header("Location: /");
+        } catch (Exception $e) {
+            echo "Erro ao fazer logout: " . $e->getMessage() ;
+        }
     }
+
 
     public static function index()
     {

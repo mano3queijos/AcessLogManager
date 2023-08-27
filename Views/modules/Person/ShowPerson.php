@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+// Verifica se o usuário está autenticado
+if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
+    // Redireciona o usuário para a página de login ou exibe uma mensagem de erro
+    header("Location: /caminho/para/pagina/de/login.php");
+    exit();
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,61 +37,51 @@
         <div class="d-flex justify-content-center">
             <div class="table-responsive col col-md-12 mx-auto">
 
+                <!-- ... (código HTML anterior) ... -->
 
                 <table class="table table-hover table-bordered w-75 mx-auto" style="font-size: 18px;">
-
                     <thead class="table-dark">
-
                         <tr>
                             <th class="text-center" scope="col">id</th>
                             <th class="text-center" scope="col">Name</th>
                             <th class="text-center" scope="col">CPF</th>
                             <th class="text-center" scope="col">Email</th>
                             <th class="text-center" scope="col">BirthDay</th>
-                            <th class="text-center" scope="col">Entrance </th>
-                            <th class="text-center" scope="col">exit</th>
-
-
+                            <th class="text-center" scope="col">Entrance</th>
+                            <th class="text-center" scope="col">Exit</th>
+                            <th class="text-center" scope="col">lenght of stay
+                            </th>
                         </tr>
-
                     </thead>
-
                     <tbody>
-
-
                         <?php foreach ($model->rows as $item) : ?>
                         <tr>
+                            <td class="text-center"><?= $item->id ?></td>
+                            <td class="text-center"><?= $item->name ?></td>
+                            <td class="text-center"><?= $item->cpf ?></td>
+                            <td class="text-center"><?= $item->email ?></td>
+                            <td class="text-center"><?= $item->birthday ?></td>
+                            <td class="text-center"><?= $item->entry_time ?></td>
+                            <td class="text-center"><?= $item->exit_time ?></td>
                             <td class="text-center">
-                                <?= $item->id ?>
-
+                                <?php
+                                    if ($item->entry_time && $item->exit_time) {
+                                        $entryTime = new DateTime($item->entry_time);
+                                        $exitTime = new DateTime($item->exit_time);
+                                        $diff = $entryTime->diff($exitTime);
+                                        echo $diff->format('%H:%I:%S'); // Exibe o tempo no formato horas:minutos:segundos
+                                    } else {
+                                        echo "N/A";
+                                    }
+                                    ?>
                             </td>
-                            <td class="text-center">
-                                <?= $item->name ?>
-                            </td>
-                            <td class="text-center">
-                                <?= $item->cpf ?>
-                            </td>
-                            <td class="text-center">
-                                <?= $item->email ?>
-                            </td>
-                            <td class="text-center">
-                                <?= $item->birthday ?>
-                            </td>
-                            <td class="text-center">
-                                <?= $item->entry_time ?>
-                            </td>
-                            <td class="text-center">
-                                <?= $item->exit_time ?>
-                            </td>
-
                         </tr>
                         <?php endforeach ?>
-
                     </tbody>
-
-
-
                 </table>
+
+                <!-- ... (código HTML posterior) ... -->
+
 
 
 

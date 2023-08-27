@@ -127,22 +127,33 @@ class PersonModel
         return $dao->login($cpf, $password);
     }
 
+
     public function recordLogin($personId)
     {
-        $entryTime = date("Y-m-d H:i:s");
 
         $accessLogDAO = new AccessLogDAO();
 
-        $accessLogDAO->insertLog($personId, $entryTime);
+        if (!$accessLogDAO->hasUnfinishedEntry($personId)) {
+            $entryTime = date("Y-m-d H:i:s");
+            $accessLogDAO->insertLog($personId, $entryTime);
+        } else {
+            throw new Exception("Não é possível registrar entrada. Saída anterior pendente.");
+        }
     }
+
+
 
     public function recordLogout($personId)
     {
-        $exitTime = date("Y-m-d H:i:s");
-
         include 'C:\xampp\htdocs\AccessLogManager\DAO\PersonDAO.php';
+
         $accessLogDAO = new AccessLogDAO();
 
-        $accessLogDAO->updateExitTime($personId, $exitTime);
+        if (!$accessLogDAO->hasUnfinishedExit($personId)) {
+            $exitTime = date("Y-m-d H:i:s");
+            $accessLogDAO->updateExitTime($personId, $exitTime);
+        } else {
+            throw new Exception("Não é possível registrar saída. Nenhuma entrada correspondente encontrada.");
+        }
     }
 }
