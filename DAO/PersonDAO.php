@@ -43,16 +43,12 @@ class AccessLogDAO
 
         $stmt->execute();
     }
-    public function insertLog($personId, $entryTime, $exitTime)
+    public function insertLog($personId, $entryTime)
     {
-        $sql = "INSERT INTO access_logs (person_id, entry_time, exit_time) VALUES (?, ?, ?)";
+        $sql = "UPDATE persons SET entry_time = ? WHERE id = ?";
         $stmt = $this->connection->prepare($sql);
-
-        $stmt->bindValue(1, $personId);
-        $stmt->bindValue(2, $entryTime);
-        $stmt->bindValue(3, $exitTime);
-
-
+        $stmt->bindValue(1, $entryTime);
+        $stmt->bindValue(2, $personId);;
         $stmt->execute();
     }
 
@@ -61,9 +57,9 @@ class AccessLogDAO
         $existingEntry = $this->getExistingEntry($personId);
 
         if ($existingEntry) {
-            $this->updateExitTime($existingEntry['id']/*valor do id da entrada em andamento*/, $exitTime);
+            $this->updateExitTime($existingEntry['id'], $exitTime);
         } else {
-            $this->insertLog($personId, $entryTime, $exitTime);
+            $this->insertLog($personId, $entryTime);
         }
     }
     public function getExistingEntry($personId)
@@ -104,26 +100,6 @@ class AccessLogDAO
 
         return $stmt->fetchAll(PDO::FETCH_CLASS);
     }
-
-    public function getAllRowsWithLastEntry()
-    {
-        $sql = "
-        SELECT p.*, l.entry_time AS last_entry
-        FROM persons p
-        LEFT JOIN (
-            SELECT person_id, MAX(entry_time) AS entry_time
-            FROM access_logs
-            GROUP BY person_id
-        ) l ON p.id = l.person_id
-    ";
-
-        $stmt = $this->connection->prepare($sql);
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_CLASS);
-    }
-
-
 
     public function login($cpf, $password)
     {

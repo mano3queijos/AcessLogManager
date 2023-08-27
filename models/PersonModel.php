@@ -6,7 +6,7 @@ class PersonModel
 
     public $rows;
 
-    private $cpf,  $email,  $name,   $id,  $password,  $phoneNumber, $birthday;
+    private $cpf,  $email,  $name,   $id,  $password,  $phoneNumber, $birthday, $entryTime, $exitTime;
 
     public function getCpf()
     {
@@ -67,6 +67,29 @@ class PersonModel
         $this->password = $password;
     }
 
+
+
+    public function getEntryTime()
+    {
+        return $this->entryTime;
+    }
+
+    public function setEntryTime($entryTime)
+    {
+        $this->entryTime = $entryTime;
+    }
+
+    public function getExitTime()
+    {
+        return $this->exitTime;
+    }
+
+    public function setExitTime($exitTime)
+    {
+        $this->exitTime = $exitTime;
+    }
+
+
     public function getPhoneNumber()
     {
         return $this->phoneNumber;
@@ -92,14 +115,7 @@ class PersonModel
 
         $dao = new AccessLogDAO();
 
-        return  $dao->select();
-    }
-    public function getAllLogs()
-    {
-
-        $logDao = new AccessLogDAO();
-
-        return $logDao->getAllRowsWithLastEntry();
+        $this->rows = $dao->select();
     }
 
     public function login($cpf, $password)
@@ -114,11 +130,10 @@ class PersonModel
     public function recordLogin($personId)
     {
         $entryTime = date("Y-m-d H:i:s");
-        $exitTime = null;
 
         $accessLogDAO = new AccessLogDAO();
 
-        $accessLogDAO->insertLog($personId, $entryTime, $exitTime);
+        $accessLogDAO->insertLog($personId, $entryTime);
     }
 
     public function recordLogout($personId)

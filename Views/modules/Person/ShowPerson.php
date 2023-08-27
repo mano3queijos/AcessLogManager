@@ -52,29 +52,33 @@
                     <tbody>
 
 
-                        <?php foreach ($persons as $person) : ?>
+                        <?php foreach ($model->rows as $item) : ?>
                         <tr>
                             <td class="text-center">
-                                <?= $person->id ?>
+                                <?= $item->id ?>
+
                             </td>
                             <td class="text-center">
-                                <?= $person->name ?>
+                                <?= $item->name ?>
                             </td>
                             <td class="text-center">
-                                <?= $person->cpf ?>
+                                <?= $item->cpf ?>
                             </td>
                             <td class="text-center">
-                                <?= $person->email ?>
+                                <?= $item->email ?>
                             </td>
                             <td class="text-center">
-                                <?= $person->birthday ?>
+                                <?= $item->birthday ?>
                             </td>
                             <td class="text-center">
-                                <?= $person->last_entry ?>
+                                <?= $item->entry_time ?>
+                            </td>
+                            <td class="text-center">
+                                <?= $item->exit_time ?>
                             </td>
 
                         </tr>
-                        <?php endforeach; ?>
+                        <?php endforeach ?>
 
                     </tbody>
 
