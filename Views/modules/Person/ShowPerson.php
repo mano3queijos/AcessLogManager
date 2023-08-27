@@ -12,7 +12,6 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link rel="stylesheet" href="Style.css">
 </head>
 
 
@@ -25,9 +24,6 @@
 
     <div class="container">
         <div class="d-flex justify-content-center">
-
-
-
             <div class="table-responsive col col-md-12 mx-auto">
 
 
@@ -94,25 +90,20 @@
                     <div class="form-group">
                         <label class="col-md-2 control-label" for="prosseguir"></label>
                         <div>
-                            <a href="./index.jsp">
+                            <a href="/KingdonOfCats">
 
                                 <button type="submit" name="prosseguir" class="btn btn-success" type="Submit">Voltar
-                                    Para Menu Inicial</button>
-
+                                    Para KingdonOfCats</button>
 
                             </a>
 
                         </div>
                     </div>
 
-
                 </div>
-
 
             </div>
         </div>
-
-
 
     </div>
 

@@ -1,23 +1,20 @@
 <?php
+session_start();
+
 include 'Controller/PersonController.php';
 $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 
 switch ($url) {
-    case '/';
-
-        echo "pagina inicial";
 
 
-        break;
-
-    case '/person':
+    case '/list':
 
         PersonController::index();
 
         break;
 
-    case '/person/login':
+    case '/login':
 
         PersonController::login();
 
@@ -28,17 +25,24 @@ switch ($url) {
 
         break;
 
-    case '/person/form/save':
+    case '/form/save':
         PersonController::save();
 
         break;
 
-    case '/person/login/confirmation':
+    case '/login/confirmation':
         PersonController::performLogin();
         break;
+    case '/exit/confirmation':
+        PersonController::performLogOut();
+        break;
 
-    case '/index':
+    case '/':
+        PersonController::indexCat();
+        break;
 
+    case '/KingdonOfCats':
+        PersonController::kingdonOfCats();
         break;
 
     default:

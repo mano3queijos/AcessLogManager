@@ -76,7 +76,7 @@ class AccessLogDAO
     public function updateExitTime($personId, $exitTime)
     {
 
-        $sql = "UPDATE access_logs SET exit_time = ? WHERE person_id = ?";
+        $sql = "UPDATE persons SET exit_time = ? WHERE id = ?";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindValue(1, $exitTime);
         $stmt->bindValue(2, $personId);

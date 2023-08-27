@@ -13,16 +13,30 @@ class PersonController
         $cpf = $_POST['cpf'];
         $password = $_POST['password'];
 
-        $personId = $model->login($cpf, $password);
+        $userLoggedIn = $model->login($cpf, $password);
 
+        if ($userLoggedIn) {
+            $_SESSION['user_id'] = $userLoggedIn;
 
-        if ($personId) {
-            $model->recordLogin($personId);
+            $model->recordLogin($userLoggedIn);
 
-            header("Location: /person");
+            header("Location: /KingdonOfCats");
         } else {
             echo "erro";
         }
+    }
+
+    public static function performLogOut()
+    {
+
+        include 'C:\xampp\htdocs\AccessLogManager\models\PersonModel.php';
+        $model = new PersonModel();
+        $personId = $_SESSION['user_id'];
+
+        $model->recordLogout($personId);
+
+        // Redirecionar para a página de logout ou outra página
+        header("Location: /");
     }
 
     public static function index()
@@ -34,6 +48,16 @@ class PersonController
         $model->getAllRows();
 
         include 'C:\xampp\htdocs\AccessLogManager\Views\modules\Person\ShowPerson.php';
+    }
+
+    public static function indexCat()
+    {
+        include 'C:\xampp\htdocs\AccessLogManager\Views\modules\Person\indexCat.php';
+    }
+
+    public static function kingdonOfCats()
+    {
+        include 'C:\xampp\htdocs\AccessLogManager\Views\modules\Person\KingdonOfCats.php';
     }
 
     public static function login()
@@ -60,6 +84,6 @@ class PersonController
 
 
         $model->save();
-        header("Location: /person");
+        header("Location: /list");
     }
 }
