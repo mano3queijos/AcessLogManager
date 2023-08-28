@@ -4,7 +4,7 @@ session_start();
 // Verifica se o usuário está autenticado
 if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
     // Redireciona o usuário para a página de login ou exibe uma mensagem de erro
-    header("Location: /caminho/para/pagina/de/login.php");
+    header("Location: /");
     exit();
 }
 

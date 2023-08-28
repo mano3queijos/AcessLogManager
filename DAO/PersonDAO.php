@@ -1,10 +1,10 @@
 <?php
 
+
 define('HOST', 'localhost');
 define('DATABASENAME', 'accesslog_db');
 define('USER', 'root');
 define('PASSWORD', '');
-
 
 
 class AccessLogDAO
@@ -29,7 +29,7 @@ class AccessLogDAO
     }
 
 
-    public function insert(PersonModel $model)
+    public function insert($model)
     {
         $sql = "INSERT INTO persons (cpf, email, name, password, phone, birthday) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $this->connection->prepare($sql);
@@ -55,13 +55,15 @@ class AccessLogDAO
 
     public function hasUnfinishedEntry($personId)
     {
-        $sql = "SELECT * FROM persons WHERE id = ? AND entry_time IS NOT NULL AND exit_time IS NULL";
+        $sql = "SELECT COUNT(*) FROM persons WHERE id = ? AND entry_time IS NOT NULL AND exit_time IS NULL";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindValue(1, $personId);
         $stmt->execute();
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $rowCount = $stmt->fetchColumn();
+        return $rowCount > 0;
     }
+
 
     public function hasUnfinishedExit($personId)
     {

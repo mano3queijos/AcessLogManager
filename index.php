@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include 'Controller/PersonController.php';
+include 'Controllers/PersonController.php';
 $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 
